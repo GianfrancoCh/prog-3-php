@@ -2,34 +2,56 @@
 
 class Auto{
 
-    private $_color;
-    private $_precio;
-    private $_marca;
-    private $_fecha;
+    private $color;
+    private $precio;
+    private $marca;
+    private $fecha;
 
-    public function __construct($_marca, $_color, $_precio = null,$_fecha = null){
-        $this->_marca = $_marca;
-        $this->color = $_color;  
+    public function __construct($marca, $color, $precio = "",$fecha = ""){
+        $this->marca = $marca;
+        $this->color = $color; 
+        $this->precio = $precio;
+        $this->fecha = $fecha;
     }
 
     public function AgregarImpuestos($doble){
-        $this->_precio += $doble;
+        $this->precio += $doble;
     } 
 
     public static function MostrarAuto($auto){
-        echo "Marca: " . $auto->_marca."</br>";
-        echo "Color: " . $auto->_color."</br>";
-        echo "Precio: " . $auto->precio."</br>";
-        echo "Fecha: " . $auto->_fecha."</br>";
+    
+        echo "</br> Marca: " . $auto->marca."</br>";
+        echo "Color: " . $auto->color."</br>";
+
+        if($auto->precio != null){
+            echo "Precio: " . $auto->precio."</br>";
+        }
+        if($auto->fecha != null){
+            echo "Fecha: " . $auto->fecha->format('d-m-Y')."</br>";
+        }
+
+        
+        
     }
 
     public function Equals($auto_A,$auto_B){
 
-        if($auto_A->_marca == $auto_B->_marca){
+        if($auto_A->marca == $auto_B->marca){
             return true;
         }
         else{
             return false;
         }
+    }
+
+    public static function Add($auto_A, $auto_B){   
+        if($auto_A->marca == $auto_B->marca && $auto_A->color == $auto_B->color){
+            return $auto_A->precio + $auto_B->precio;
+        }
+        else{
+
+            echo "</br>No se pudo sumar</br>";
+        }
+
     }
 }
