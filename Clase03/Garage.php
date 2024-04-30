@@ -66,5 +66,19 @@ class Garage{
         }
     }
 
+    public static function AltaGarage($razonSocial, $precioPorHora, $autos){
+
+        $columnas = "$razonSocial,$precioPorHora,$autos";
+        $archivo = fopen("garage.csv", "a");
+        if($archivo){
+            fputs($archivo,$columnas);
+            fclose($archivo);
+            echo "Se dio de alta un garage";
+        }
+        else{
+            echo "Error";
+        }
+    }
+
 
 }

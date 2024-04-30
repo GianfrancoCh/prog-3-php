@@ -9,24 +9,24 @@ $auto_2 = new Auto("Toyota","Negro");
 $auto_3 = new Auto("Toyota","Verde");
 
 
-$garage = new Garage("GaragePHP",500);
+// $garage = new Garage("GaragePHP",500);
 
 
-$garage->Add($auto_1);
-$garage->MostrarGarage();
-$garage->Add($auto_1);
+// $garage->Add($auto_1);
+// $garage->MostrarGarage();
+// $garage->Add($auto_1);
 
-$garage->Add($auto_2);
-$garage->MostrarGarage();
+// $garage->Add($auto_2);
+// $garage->MostrarGarage();
 
-$garage->Add($auto_2);
-$garage->MostrarGarage();
+// $garage->Add($auto_2);
+// $garage->MostrarGarage();
 
-$garage->Remove($auto_2);
-$garage->Remove($auto_1);
-$garage->MostrarGarage();
+// $garage->Remove($auto_2);
+// $garage->Remove($auto_1);
+// $garage->MostrarGarage();
 
-$garage->Remove($auto_3);
+// $garage->Remove($auto_3);
 
 
 

@@ -3,7 +3,12 @@
 include("Auto.php");
 
 
-Auto::AltaAuto("Toyota", "Rojo", 9000 , (new DateTime('05/04/2024'))->format('d-m-Y'));
+$arrayAutos = Auto::LeerAutos();
+
+foreach($arrayAutos as $auto){
+
+    Auto::MostrarAuto($auto);
+}
 
 // $auto_1 = new Auto("Toyota", "Rojo");
 // $auto_2 = new Auto("Toyota","Negro");

@@ -27,7 +27,7 @@ class Auto{
             echo "Precio: " . $auto->precio."</br>";
         }
         if($auto->fecha != null){
-            echo "Fecha: " . $auto->fecha->format('d-m-Y')."</br>";
+            echo "Fecha: " . $auto->fecha."</br>";
         }
    
     }
@@ -68,7 +68,40 @@ class Auto{
         }
     }
 
+    public static function LeerAutos(){
+
+        $autos = [];
+        $archivoAutos = fopen("autos.csv", "r");
+        while(!feof($archivoAutos)){
+            $linea = fgets($archivoAutos);
+            echo $linea . "<br>";
+            $autoArray = explode(",", $linea);
+
+            $marca = $autoArray[0];
+            $color = $autoArray[1];
+
+            if($autoArray[2] != null){
+                $precio = $autoArray[2];
+            }
+
+            if($autoArray[3] != null){
+                $fecha = $autoArray[3];
+            }
+
+            $auto = new Auto($marca, $color, $precio, $fecha);
+
+            $autos[] = $auto;
+        }
+
+        fclose($archivoAutos);
+
+        return $autos;
+
+    }
 
     
+
+
+
     
 }
