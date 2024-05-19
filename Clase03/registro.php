@@ -10,12 +10,17 @@ Cada usuario se agrega en un renglón diferente al anterior.
 Hacer los métodos necesarios en la clase usuario */
 
 
-include("Auto.php");
-
-$usuario = new Usuario($_POST['nombre'],$_POST['clave'],$_POST['email']);
+include("Usuario.php");
 
 
+if(isset($_POST["nombre"]) && isset($_POST["clave"]) && isset($_POST["email"])){
 
+    $usuario = new Usuario($_POST["nombre"],$_POST["clave"],$_POST["email"]);
 
+    Usuario::guardarUsuarioCSV($usuario);
+
+} else {
+    echo "Parametros incorrectos";
+}
 
 
