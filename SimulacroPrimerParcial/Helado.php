@@ -169,7 +169,7 @@ class Helado{
         if($productos != null){
             foreach ($productos as $producto) {
                 if ($producto['sabor'] == $sabor && $producto['tipo'] == $tipo) {
-                    return $productos;
+                    return $producto;
                 }
             }
         }  

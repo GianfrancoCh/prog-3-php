@@ -1,6 +1,7 @@
 <?php
 
 include_once("Helado.php");
+include_once("Ventas.php");
 
 if(isset($_POST["sabor"]) && isset($_POST["tipo"])){
 

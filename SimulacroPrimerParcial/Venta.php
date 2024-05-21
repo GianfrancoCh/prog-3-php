@@ -107,6 +107,151 @@ class Venta{
         }
     }
 
+    public static function moverImagen($numeroPedido){
+        $carpeta_archivos = 'ImagenesDeLaVenta/2024/';
+        $carpeta_final = 'ImagenesBackupVentas/2024/';
+        $venta = self::validarVentaNumeroPedido($numeroPedido);
+        $usuario = explode("@", $venta["usuario"]);
+        $nombre_archivo = $venta["sabor"] . "+" . $venta["tipo"]. "+" . $venta["vaso"] . "+" . $usuario[0] . ".png";
+        $ruta_archivo = $carpeta_archivos . $nombre_archivo;
+        $ruta_destino = $carpeta_final . $nombre_archivo;
+
+        if(rename($ruta_archivo, $ruta_destino)){
+            echo "se movio la imagen";
+        }else{
+            echo "no se movio la imagen";
+        }
+
+    }
+
+    public static function consultarVentasPorFecha($fecha) {
+        $ventas = self::leerVentasJSON();
+        $cantidad = 0;
+        foreach ($ventas as $venta) {
+            if ($venta['fecha'] === $fecha) {
+                $cantidad += $venta['cantidad'];
+            }
+        }
+        return $cantidad;
+    }
+
+    public static function consultarVentasPorFechas($fecha1, $fecha2) {
+
+        $ventas = self::leerVentasJSON();
+        $ventasFechas = [];
+        foreach ($ventas as $venta) {
+            if ($venta['fecha'] >= $fecha1 && $venta['fecha'] <= $fecha2) {
+                $ventasFechas[] = $venta;
+            }
+        }
+
+        $sabores = [];
+        foreach ($ventasFechas as $key => $venta) {
+            $sabores[$key] = $venta['sabor'];
+        }
+        asort($sabores);
+        $ventasOrdenadas = [];
+        foreach ($sabores as $key => $sabor) {
+            $ventasOrdenadas[] = $ventasFechas[$key];
+        }
+        return $ventasOrdenadas;
+    }
+    
+    public static function consultarVentasPorUsuario($usuario) {
+        $ventas = self::leerVentasJSON();
+        $ventasUsuario = [];
+        foreach ($ventas as $venta) {
+            if ($venta['usuario'] === $usuario) {
+                $ventasUsuario[] = $venta;
+            }
+        }
+        return $ventasUsuario;
+    }
+
+    public static function consultarVentasPorSabor($sabor) {
+        $ventas = self::leerVentasJSON();
+        $ventasSabor = [];
+        foreach ($ventas as $venta) {
+            if ($venta['sabor'] === $sabor) {
+                $ventasSabor[] = $venta;
+            }
+        }
+        return $ventasSabor;
+    }
+
+    public static function consultarVentasPorVaso($vaso) {
+        $ventas = self::leerVentasJSON();
+        $ventasVaso = [];
+        foreach ($ventas as $venta) {
+            if ($venta['vaso'] === $vaso) {
+                $ventasVaso[] = $venta;
+            }
+        }
+        return $ventasVaso;
+    }
+
+    public static function validarVenta($numeroPedido, $usuario, $sabor, $tipo, $vaso, $cantidad){
+        $ventas = self::leerVentasJSON();
+        if($ventas != null){
+            foreach ($ventas as $venta) {
+                if ($venta['numeroPedido'] == $numeroPedido && $venta['usuario'] == $usuario && $venta['sabor']>=$sabor && $venta['tipo']>=$tipo && $venta['vaso']>=$vaso && $venta['cantidad']>=$cantidad) {
+                    return $venta;
+                }
+            }
+        }  
+        return null;  
+    }
+
+    public static function validarVentaNumeroPedido($numeroPedido){
+        $ventas = self::leerVentasJSON();
+        if($ventas != null){
+            foreach ($ventas as $venta) {
+                if ($venta['numeroPedido'] == $numeroPedido) {
+                    return $venta;
+                }
+            }
+        }  
+        return null;  
+    }
+
+    public static function actualizarVenta($numeroPedido, $nuevaFecha){
+
+        $ventas = self::leerVentasJSON();
+        foreach($ventas as $key => $venta){
+            if ($venta['numeroPedido'] == $numeroPedido) {
+                echo "exito";
+                $ventas[$key]['fecha'] = $nuevaFecha; 
+                $productoActualizado = true;
+                break;
+            }
+        }
+
+        if ($productoActualizado) {
+            self::guardarVentasJSON($ventas); 
+            return "Actualizado";
+        }
+        return "No se pudo actualizar";
+    }
+
+
+    public static function borrarVenta($numeroPedido) {
+        $ventas = self::leerVentasJSON();
+
+        foreach ($ventas as $key => $venta) {
+            if ($venta['numeroPedido'] == $numeroPedido) {
+                $ventas[$key]['eliminado'] = true;
+                break;
+            }
+        }
+        self::guardarVentasJSON($ventas);
+        echo "<br>Venta estado eliminado<br>";
+
+        self::moverImagen($numeroPedido);
+    
+    }
+
+    
+
 
 }
 

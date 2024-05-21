@@ -4,8 +4,16 @@ if(isset($_GET['accion'])){
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
             switch ($_GET['accion']){
-                case 'test':
-                    include 'test.php';
+                case 'ventas':
+                    include 'ConsultarVentas.php';
+                    break;
+            }
+            break;
+        case 'PUT':
+            parse_str(file_get_contents("php://input"),$put_vars);
+            switch ($_GET['accion']){
+                case 'modificar':
+                    include 'ModificarVenta.php';
                     break;
             }
             break;
@@ -19,6 +27,19 @@ if(isset($_GET['accion'])){
                     break;
                 case 'venta':
                     include 'AltaVenta.php';
+                    break;
+                case 'devolver':
+                    include 'DevolverHelado.php';
+                    break;
+                default:
+                    echo 'Parámetro "accion" no permitido';
+                    break;
+            }
+            break;    
+        case "DELETE":
+            switch ($_GET['accion']){
+                case 'borrar':
+                    include 'BorrarVenta.php';
                     break;
                 default:
                     echo 'Parámetro "accion" no permitido';
