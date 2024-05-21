@@ -14,6 +14,12 @@ if(isset($_GET['accion'])){
                 case 'alta':
                     include 'HeladeriaAlta.php';
                     break;
+                case 'consulta':
+                    include 'HeladoConsultar.php';
+                    break;
+                case 'venta':
+                    include 'AltaVenta.php';
+                    break;
                 default:
                     echo 'Parámetro "accion" no permitido';
                     break;

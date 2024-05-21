@@ -143,7 +143,6 @@ class Usuario{
             
     }
 
-
     public static function subirImagen($imagen){
 
         $carpeta_archivos = 'Usuario/';
