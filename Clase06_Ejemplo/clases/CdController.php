@@ -38,7 +38,7 @@ class CdController {
         }
         return $retorno;
     }
-
+    
     public function buscarCdPorIdYAnio($id, $anio) {
         return cd::TraerUnCdAnioParamNombre($id, $anio);
     }

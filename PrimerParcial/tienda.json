@@ -1,0 +1,38 @@
+[
+  {
+    "id": 4156,
+    "marca": "LG",
+    "precio": "1500",
+    "tipo": "cartucho",
+    "modelo": "cartuchin",
+    "color": "violeta",
+    "stock": 95
+  },
+  {
+    "id": 1978,
+    "marca": "LG",
+    "precio": "1500",
+    "tipo": "impresora",
+    "modelo": "pedro123",
+    "color": "violeta",
+    "stock": 1
+  },
+  {
+    "id": 7025,
+    "marca": "Epson",
+    "precio": "2500",
+    "tipo": "impresora",
+    "modelo": "x123",
+    "color": "negra",
+    "stock": 1
+  },
+  {
+    "id": 3470,
+    "marcaImpresora": "LG",
+    "marcaCartucho": "LG",
+    "modeloImpresora": "pedro123",
+    "modeloCartucho": "cartuchin",
+    "precio": 3000,
+    "tipo": "conjunto"
+  }
+]

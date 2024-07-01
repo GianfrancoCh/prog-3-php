@@ -1,39 +1,74 @@
 <?php
-// Archivo: consulta.php
+require_once 'clases/UsuarioControler.php';
 
-// Conexión a la base de datos
-$servername = "localhost";
-$username = "tu_usuario";
-$password = "tu_contraseña";
-$dbname = "tu_base_de_datos";
+$usuarioController = new UsuarioController();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-// Consulta SQL
-$sql = "SELECT * FROM usuarios";
-$result = $conn->query($sql);
-
-// Si hay resultados, mostrarlos en una tabla HTML
-if ($result->num_rows > 0) {
-    echo "<h2>Usuarios</h2>";
-    echo "<table border='1'>";
-    echo "<tr><th>ID</th><th>Nombre</th><th>Email</th></tr>";
-    while($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>".$row["id"]."</td>";
-        echo "<td>".$row["nombre"]."</td>";
-        echo "<td>".$row["email"]."</td>";
-        echo "</tr>";
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'listar':
+                switch($_GET["tipo"]){
+                    case 'usuarios':
+                        $datos = $usuarioController->listarUsuarios();
+                        echo json_encode($datos);
+                        break;
+                }
+                break;
+                
+        }
+    } else {
+        echo json_encode(['error' => 'Falta el parametro action']);
     }
-    echo "</table>";
-} else {
-    echo "No se encontraron usuarios.";
-}
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'registro':
+                if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['clave']) && isset($_POST['mail']) && isset($_POST['localidad'])) {
+                    $resultado = $usuarioController->insertarUsuario($_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['mail'], $_POST['localidad']);
+                    echo json_encode(['resultado' => $resultado]);
+                } else {
+                    echo json_encode(['error' => 'Faltan parametros']);
+                }
+                break;
+            case 'login':
+                if (isset($_POST['clave']) && isset($_POST['mail'])){
 
-// Cerrar conexión
-$conn->close();
+                }
+                break;
+            default:
+                echo json_encode(['error' => 'Accion no valida']);
+                break;
+        }
+    } else {
+        echo json_encode(['error' => 'Falta el parametro action']);
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    parse_str(file_get_contents("php://input"), $putData);
+
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'modificar':
+                break;
+            default:
+                echo json_encode(['error' => 'Accion no valida']);
+                break;
+        }
+    } else {
+        echo json_encode(['error' => 'Falta el parametro action']);
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'borrar':
+            default:
+                echo json_encode(['error' => 'Accion no valida']);
+                break;
+        }
+    } else {
+        echo json_encode(['error' => 'Falta el parametro action']);
+    }
+} else {
+    echo json_encode(['error' => 'Metodo HTTP no permitido']);
+}
+?>

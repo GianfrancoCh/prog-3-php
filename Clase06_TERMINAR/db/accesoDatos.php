@@ -8,7 +8,7 @@ class AccesoDatos
     private function __construct()
     {
         try { 
-            $this->objetoPDO = new PDO('mysql:host=localhost;dbname=pruebas;charset=utf8','root', '', array(PDO::ATTR_EMULATE_PREPARES => false,PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            $this->objetoPDO = new PDO('mysql:host=localhost;dbname=clase6;charset=utf8','root','', array(PDO::ATTR_EMULATE_PREPARES => false,PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
             $this->objetoPDO->exec("SET CHARACTER SET utf8");
             } 
         catch (PDOException $e) { 
@@ -16,7 +16,6 @@ class AccesoDatos
             die();
         }
     }
- 
     public function RetornarConsulta($sql)
     { 
         return $this->objetoPDO->prepare($sql); 
@@ -35,7 +34,6 @@ class AccesoDatos
         return self::$ObjetoAccesoDatos;        
     }
  
-     // Evita que el objeto se pueda clonar
     public function __clone()
     { 
         trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR); 
